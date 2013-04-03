@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" ng-app="partymote">
+<head>
+  <meta charset="utf-8">
+  <style>
+            @import url('sp://partymote/css/app.css');
+            @import url('$views/css/buttons.css');
+            @import url('$views/css/image.css');
+            @import url('$views/css/list.css');
+  </style>
+
+</head>
+<body>
+  <ul class="menu">
+    <li><a href="#/main">view1</a></li>
+    <li><a href="#/settings">view2</a></li>
+  </ul>
+
+  <div ng-view></div>
+
+  <div>Angular seed app: v<span app-version></span></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+  -->
+  <script src="sp://partymote/lib/angular/angular.js"></script>
+  <script src="sp://partymote/js/app.js"></script>
+  <script src="sp://partymote/js/services.js"></script>
+  <script src="sp://partymote/js/controllers.js"></script>
+  <script src="sp://partymote/js/filters.js"></script>
+  <script src="sp://partymote/js/directives.js"></script>
+  <script src="sp://partymote/js/navigator.js"></script>
+</body>
+</html>

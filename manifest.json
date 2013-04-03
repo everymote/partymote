@@ -1,0 +1,44 @@
+{
+  "AcceptedLinkTypes": [
+		"album", "playlist", "track"
+	],
+    "AppDescription": {
+		    "en": "blob"
+	  },
+	  "AppIcon": {
+		    "36x18": "tutorial.png"
+	  },
+	  "AppName": {
+		    "en": "Partymote"
+	  },
+	  "AppURL":"www.partymote.com",
+	  "BundleIdentifier": "partymote",
+	  "BundleType": "Application",
+	  "BundleVersion": "0.1",
+	  "DefaultTabs": [
+		    {
+			      "arguments": "main",
+			      "title": {
+				        "en": "Home"
+		        }
+		    },
+		    {
+		        "arguments": "settings",
+			      "title": {
+				        "en": "Settings"
+			      }
+        }
+	  ],
+	  "Dependencies": {
+	      "api": "1.10.2",
+	      "views": "1.18.1"
+    },
+	  "RequiredInterface": 1,
+	  "RequiredPermissions": [
+        "http://thing.everymote.com"
+	  ],
+	  "SupportedLanguages": [
+		    "en"
+	  ],
+	  "VendorIdentifier": "com.everymote"
+}
