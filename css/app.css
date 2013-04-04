@@ -90,8 +90,10 @@ body {
   content: attr(data-position);
   position: absolute;
   left: 0;
-  font-size: 34px;
+  font-size: 27px;
   -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  padding: 5px
 }
   
 
