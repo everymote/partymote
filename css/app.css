@@ -5,6 +5,7 @@ body {
   -webkit-box-orient: vertical;
   -webkit-box-pack: center;
   -webkit-box-align: center; 
+  font: 12px/1.42 Helvetica,'Lucida Grande', Tahoma, sans-serif;
 }
 * { 
   -moz-box-sizing: border-box; 
@@ -52,7 +53,7 @@ body {
 }
 
 .play-list li:first-child{
-  background-color: #70DFE9;
+  background-color: #67c6e2;
   height: 100px;
   margin-bottom: 30px;
 } 
@@ -67,6 +68,10 @@ body {
     font-size: 18px;
     color: white;
 }
+.play-list li:first-child .artist{
+    font-size: 18px;
+    color: #0f7087;
+}
 .play-list li:first-child:after{
   content: 'Playlist';
 } 
@@ -77,6 +82,7 @@ body {
   position: relative;
   padding-left: 40px;
   margin-bottom: 3px;
+  color: #8a8a8a;
 } 
 
 .play-list li:not(:first-child) img{
@@ -86,7 +92,7 @@ body {
 } 
 
 [data-position]:before {
-  color: #70DFE9;
+  color: #67c6e2;
   content: attr(data-position);
   position: absolute;
   left: 0;
