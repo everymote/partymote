@@ -3,8 +3,9 @@
 /* Filters */
 
 angular.module('partymote.filters', []).
-  filter('interpolate', ['version', function(version) {
-    return function(text) {
-      return String(text).replace(/\%VERSION\%/mg, version);
-    }
-  }]);
+  filter('zero', function() {
+  	return function(index){
+  		var s = "0" + index;
+    	return s.substr(s.length-2); 
+	};
+  });

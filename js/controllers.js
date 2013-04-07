@@ -3,8 +3,14 @@
 /* Controllers */
 
 
-function MainCtrl() {}
-MainCtrl.$inject = [];
+function MainCtrl($scope, location, playlistServices) {
+	location.start(function(position){
+					console.log(position);
+				});
+
+	$scope.playlist = playlistServices.getPlaylist();
+}
+//MainCtrl.$inject = [];
 
 
 function SettingsCtrl() {

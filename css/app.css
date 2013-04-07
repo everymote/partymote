@@ -91,7 +91,7 @@ body {
   padding: 5px;
 } 
 
-[data-position]:before {
+.play-list li:not(:first-child):before {
   color: #67c6e2;
   content: attr(data-position);
   position: absolute;

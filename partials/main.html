@@ -7,26 +7,12 @@
 <div>
 	Now Playing
 </div>
-<ul class="play-list">
-	<li>
-		<img src="fff"/>
+<ul class="play-list" >
+	<li data-position="{{$index|zero}}" ng-repeat="track in playlist.tracks">
+		<img ng-src="{{track.image}}"/>
 		<div class="track-artist-container">
-			<div class="track">Track</div>
-			<div class="artist">Artist</div>
-		</div>
-	</li>
-	<li data-position="01">
-		<img src="fff"/>
-		<div class="track-artist-container">
-			<div class="track">Track</div>
-			<div class="artist">Artist</div>
-		</div>
-	</li>
-	<li data-position="02">
-		<img src="fff"/>
-		<div class="track-artist-container">
-			<div class="track">Track</div>
-			<div class="artist">Artist</div>
+			<div class="track">{{track.name}}</div>
+			<div class="artist">artist</div>
 		</div>
 	</li>
 </ul>
