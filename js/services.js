@@ -43,6 +43,22 @@ angular.module('partymote.services',[])
     	var loadedPlaylist;
         var _Track, _Player;
         var index = 0;
+        var playerEventListeners = [];
+
+        var addPlayerEventListener = function(callback){
+            playerEventListeners.push(callback);
+        };
+
+        var trackChanged = function(){
+            playerEventListeners.forEach(function(callback){callback();});
+        };
+
+        var getCurrentTrackInfo = function(){
+            if(_Player && _Player.track){
+                return _Player.track.name;
+            }
+            return "Nothing playing!"
+        };
 
         var updatePlaylistView = function(){
             index = _Player.index;
@@ -71,7 +87,9 @@ angular.module('partymote.services',[])
     	require(['$api/models#Playlist', '$api/models#Track', '$api/models#player'], function(Playlist, Track, Player) {
             _Track = Track;
             _Player = Player;
+
             _Player.addEventListener('change:index', updatePlaylistView);
+            _Player.addEventListener('change:track', trackChanged);
 
     		Playlist.
     			createTemporary("partymote").
@@ -92,5 +110,7 @@ angular.module('partymote.services',[])
 		return playlist;
 	};
 	return {getPlaylist:getPlaylist,
-            addTrack:addTrack};
+            addTrack:addTrack,
+            getCurrentTrackInfo: getCurrentTrackInfo,
+            addPlayerEventListener:addPlayerEventListener};
 });
