@@ -111,3 +111,7 @@ body {
   -webkit-box-pack: center;
 }
 
+.artist span:not(:last-child):after{
+  content:", ";
+}
+

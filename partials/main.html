@@ -12,7 +12,9 @@
 		<img ng-src="{{track.image}}"/>
 		<div class="track-artist-container">
 			<div class="track">{{track.name}}</div>
-			<div class="artist">artist</div>
+			<div class="artist" >
+				<span ng-repeat="artist in track.artists">{{artist.name}}</span> 
+			</div>
 		</div>
 	</li>
 </ul>
