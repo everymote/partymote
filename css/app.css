@@ -65,12 +65,23 @@ body {
 } 
 
 .play-list li:first-child .track{
-    font-size: 18px;
+    font-size: 20px;
     color: white;
 }
 .play-list li:first-child .artist{
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: lighter;
     color: #0f7087;
+}
+
+.play-list li:not(:first-child) .track{
+    font-size: 14px;
+    color: #787878;
+}
+.play-list li:not(:first-child) .artist{
+    font-size: 12px;
+    font-weight: lighter;
+    color: #787878;
 }
 .play-list li:first-child:after{
   content: 'Playlist';

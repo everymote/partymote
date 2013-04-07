@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('partymote', ['partymote.filters', 'partymote.services', 'partymote.directives', 'locationService']).
+angular.module('partymote', ['partymote.filters', 'partymote.services', 'partymote.directives', 'locationService','everymote.service']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/main', {templateUrl: 'partials/main.html', controller: MainCtrl});
     $routeProvider.when('/settings', {templateUrl: 'partials/settings.html', controller: SettingsCtrl});

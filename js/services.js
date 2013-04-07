@@ -36,37 +36,43 @@ angular.module('locationService',[])
 	}());
 	return geo;
 });
-//loadedPlaylist.tracks.snapshot(0, 50).done(function(snapshot) {console.log(snapshot)})
-/*
-Track
-		    									.fromURI('spotify:track:7BkQiT7LfhOCEuyWD9FF35')
-		    									.load('name','uri')
-		    									.done(function(loadedTrack){
-										                    	loadedPlaylist.tracks.add(loadedTrack);
-								                });
-                                                
-*/
+
 angular.module('partymote.services',[])
     .service('playlistServices',function($rootScope){
     	var playlist = {};
     	var loadedPlaylist;
-        var Track;
+        var _Track, _Player;
+        var index = 0;
+
+        var updatePlaylistView = function(){
+            index = _Player.index;
+            loadedPlaylist.tracks.snapshot(index, index + 50).done(function(snapshot) {
+                         playlist.tracks = snapshot.toArray();
+                         $rootScope.$apply();
+                    });
+
+        };
 
         var addTrack = function(trackURI){
-            Track
+            _Track
                 .fromURI(trackURI)
                 .load('name','uri','image')
                 .done(function(loadedTrack){
                     loadedPlaylist.tracks.add(loadedTrack);
-                    loadedPlaylist.tracks.snapshot(0, 50).done(function(snapshot) {
-                         playlist.tracks = snapshot.toArray();
-                         $rootScope.$apply();
-                    });
+                    updatePlaylistView();
+                    
+                    if(!_Player.playing){
+                        
+                        _Player.playContext(loadedPlaylist);
+                    }
                 });
             };
 
-    	require(['$api/models#Playlist', '$api/models#Track'], function(Playlist, TrackModule) {
-            Track = TrackModule;
+    	require(['$api/models#Playlist', '$api/models#Track', '$api/models#player'], function(Playlist, Track, Player) {
+            _Track = Track;
+            _Player = Player;
+            _Player.addEventListener('change:index', updatePlaylistView);
+
     		Playlist.
     			createTemporary("partymote").
     			done(function(p){
@@ -76,6 +82,8 @@ angular.module('partymote.services',[])
     										loadedPlaylist.tracks.snapshot(0, 50).done(function(snapshot) {playlist.tracks = snapshot.toArray();});
                                             addTrack('spotify:track:7BkQiT7LfhOCEuyWD9FF35');
                                             addTrack('spotify:track:6yuswSxDJzx0Tulvy6ZBXg');
+                                            addTrack('spotify:track:10bcDungKvOzo2W3LsSdp9');
+                                            
     								});
     							});
     	});
