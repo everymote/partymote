@@ -14,7 +14,15 @@ angular.module('everymote.service',['partymote.services'])
 	                    "info":playlistServices.getCurrentTrackInfo()
 	            };
 
-	              
+	        spThing.updatePlaylist = function(){
+	            if(spThing.socket){
+	            	var tracks =  playlistServices.getPlaylist().tracks.map(function(track){return track.name;});
+	            	console.log(tracks);
+	           		spThing.socket.emit('updateActionControlerState',{"id":"2", "curentState":tracks});
+	         	}
+	        };
+	        playlistServices.addPlaylistEventListener(spThing.updatePlaylist); 
+
 	        spThing.updateTrack = function(){
 	            if(spThing.socket){
 	           		spThing.socket.emit('updateInfo', playlistServices.getCurrentTrackInfo());
@@ -22,6 +30,7 @@ angular.module('everymote.service',['partymote.services'])
 	        };
 	        playlistServices.addPlayerEventListener(spThing.updateTrack);
 
+	     
 
 	        spThing.updatePlayStatus = function(){
 	            if(spThing.socket){
@@ -59,6 +68,7 @@ angular.module('everymote.service',['partymote.services'])
                 socket.emit('setup', thing.settings);
                 thing.socket = socket;
                 thing.updateTrack();
+                thing.updatePlaylist();
                 //updateEverymoteWithTrackDetails(spThing);
 
                // getPlayList(function(tracks){console.log("first GetPlayLis"); console.dir(tracks);spThing.socket.emit('updateActionControlerState', {"id":"2", "curentState":tracks});});

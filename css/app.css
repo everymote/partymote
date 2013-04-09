@@ -70,22 +70,22 @@ body {
 
 .play-list li:first-child{
   background-color: #67c6e2;
-  height: 100px;
-  margin-bottom: 30px;
+  height: 9em;
+  margin-bottom: 3em;
 } 
 
 .play-list li:first-child img{
   float: left;
-  width: 100px;
-  padding: 15px;
+  width: 9em;
+  padding: 1em;
 } 
 
 .play-list li:first-child .track{
-    font-size: 20px;
+    font-size: 2em;;
     color: white;
 }
 .play-list li:first-child .artist{
-    font-size: 16px;
+    font-size: 1.5em;
     font-weight: lighter;
     color: #0f7087;
 }
@@ -107,7 +107,7 @@ body {
   background-color: white;
   height: 50px;
   position: relative;
-  padding-left: 40px;
+  padding-left: 45px;
   margin-bottom: 3px;
   color: #8a8a8a;
 } 
@@ -115,7 +115,7 @@ body {
 .play-list li:not(:first-child) img{
   float: left;
   width: 50px;
-  padding: 5px;
+  padding: 3px;
 } 
 
 .play-list li:not(:first-child):before {

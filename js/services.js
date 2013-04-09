@@ -44,13 +44,22 @@ angular.module('partymote.services',[])
         var _Track, _Player;
         var index = 0;
         var playerEventListeners = [];
+        var playlistEventListeners = [];
 
         var addPlayerEventListener = function(callback){
             playerEventListeners.push(callback);
         };
 
+        var addPlaylistEventListener = function(callback){
+            playlistEventListeners.push(callback);
+        };
+
         var trackChanged = function(){
             playerEventListeners.forEach(function(callback){callback();});
+        };
+
+        var playlistChanged = function(){
+            playlistEventListeners.forEach(function(callback){callback();});
         };
 
         var getCurrentTrackInfo = function(){
@@ -65,6 +74,7 @@ angular.module('partymote.services',[])
             loadedPlaylist.tracks.snapshot(index, index + 50).done(function(snapshot) {
                          playlist.tracks = snapshot.toArray();
                          $rootScope.$apply();
+                         playlistChanged(playlist);
                     });
 
         };
@@ -97,7 +107,9 @@ angular.module('partymote.services',[])
     								p.load('tracks').
     									done(function(playlistPromise){
     										loadedPlaylist = playlistPromise;
-    										loadedPlaylist.tracks.snapshot(0, 50).done(function(snapshot) {playlist.tracks = snapshot.toArray();});
+    										loadedPlaylist.tracks.snapshot(0, 50)
+                                                .done(function(snapshot) {playlist.tracks = snapshot.toArray();});
+                                            
                                             addTrack('spotify:track:7BkQiT7LfhOCEuyWD9FF35');
                                             addTrack('spotify:track:6yuswSxDJzx0Tulvy6ZBXg');
                                             addTrack('spotify:track:10bcDungKvOzo2W3LsSdp9');
@@ -112,5 +124,6 @@ angular.module('partymote.services',[])
 	return {getPlaylist:getPlaylist,
             addTrack:addTrack,
             getCurrentTrackInfo: getCurrentTrackInfo,
-            addPlayerEventListener:addPlayerEventListener};
+            addPlayerEventListener:addPlayerEventListener,
+            addPlaylistEventListener:addPlaylistEventListener};
 });
