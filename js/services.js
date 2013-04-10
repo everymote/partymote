@@ -8,6 +8,7 @@
 //angular.module('partymote.services', []).
 //  value('version', '0.1');
 
+angular.module('localStorageService',[]).value('localStorage', window.localStorage);
 
 angular.module('locationService',[])
     .factory('location',function(){

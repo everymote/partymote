@@ -1,5 +1,11 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div id="settings">
+	<div>
+		<lable>Partymote Name<lable><br>
+		<input type="text" ng-model="name" ng-change="updateName()"/>
+	</div>
+	<div>
+		<lable>Access mode<lable><br>
+		<input type="radio" ng-model="accessmode" value="wifi" ng-change="updateAccessmode()">WiFi</input><br>
+		<input type="radio" ng-model="accessmode" value="location" ng-change="updateAccessmode()">Location</input>
+	</div>
+<div>

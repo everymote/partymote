@@ -9,10 +9,17 @@ function MainCtrl($scope, location, playlistServices) {
 				});
 
 	$scope.playlist = playlistServices.getPlaylist();
-}
-//MainCtrl.$inject = [];
+};
 
 
-function SettingsCtrl() {
-}
-SettingsCtrl.$inject = [];
+function SettingsCtrl($scope, localStorage) {
+	$scope.name = localStorage.getItem('partymote.name') || "";
+	$scope.accessmode = localStorage.getItem('partymote.accessmode') || "wifi";
+
+	$scope.updateAccessmode = function(){
+		localStorage.setItem('partymote.accessmode',$scope.accessmode);
+	};
+	$scope.updateName = function(){
+		localStorage.setItem('partymote.name',$scope.name);
+	};
+};

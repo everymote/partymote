@@ -28,6 +28,12 @@ body {
   box-sizing: border-box; 
 }
 
+#settings{
+  background-color: #67c6e2;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+
 #container{
   width: 400px;
   margin-top: 2em;

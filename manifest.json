@@ -6,7 +6,10 @@
 		    "en": "blob"
 	  },
 	  "AppIcon": {
-		    "36x18": "tutorial.png"
+		    "18x18": "",
+		    "64x64": "",
+		    "128x128": "",
+		    "300x300": ""
 	  },
 	  "AppName": {
 		    "en": "Partymote"
@@ -37,6 +40,10 @@
 	  "RequiredPermissions": [
         "http://thing.everymote.com"
 	  ],
+	  "SupportedDeviceClasses": [
+    		"Web",
+    		"Desktop"
+  		],
 	  "SupportedLanguages": [
 		    "en"
 	  ],
