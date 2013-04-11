@@ -12,14 +12,14 @@ function MainCtrl($scope, location, playlistServices) {
 };
 
 
-function SettingsCtrl($scope, localStorage) {
-	$scope.name = localStorage.getItem('partymote.name') || "";
-	$scope.accessmode = localStorage.getItem('partymote.accessmode') || "wifi";
+function SettingsCtrl($scope, settings) {
+	$scope.name = settings.name.get();
+	$scope.accessmode = settings.accessMode.get();
 
 	$scope.updateAccessmode = function(){
-		localStorage.setItem('partymote.accessmode',$scope.accessmode);
+		settings.accessMode.set($scope.accessmode);
 	};
 	$scope.updateName = function(){
-		localStorage.setItem('partymote.name',$scope.name);
+		settings.name.set($scope.name);
 	};
 };

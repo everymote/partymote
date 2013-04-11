@@ -10,6 +10,30 @@
 
 angular.module('localStorageService',[]).value('localStorage', window.localStorage);
 
+angular.module('settingsService',['localStorageService'])
+    .factory('settings',function(localStorage){
+        var settings = {},
+            nameChangeEventListeners = [];
+
+        settings.name = {};
+        settings.name.get = function(){return localStorage.getItem('partymote.name') || ""};
+        settings.name.set = function(name){
+            localStorage.setItem('partymote.name', name);
+            nameChangeEventListeners.forEach(function(callback){callback(name);});
+        };
+
+        settings.accessMode = {};
+        settings.accessMode.get = function(){return localStorage.getItem('partymote.accessmode') || "wifi"};
+        settings.accessMode.set = function(accessmode){localStorage.setItem('partymote.accessmode', accessmode);};
+
+        settings.addNameChangeEventListener = function(listener){
+            nameChangeEventListeners.push(listener);
+        };
+
+
+        return settings;
+});
+
 angular.module('locationService',[])
     .factory('location',function(){
 	var geo = (function() {
@@ -90,9 +114,23 @@ angular.module('partymote.services',[])
                     
                     if(!_Player.playing){
                         
-                        _Player.playContext(loadedPlaylist);
+                        //_Player.playContext(loadedPlaylist);
                     }
                 });
+            };
+
+        var addDroped = function(droped){
+            //droped.constructor.name;
+                droped
+                    .load('name','uri','image')
+                    .done(function(loadedTrack){
+                             loadedPlaylist.tracks.add(loadedTrack);
+                             updatePlaylistView();
+                         });
+                    
+                /*if(!_Player.playing){
+                    _Player.playContext(loadedPlaylist);
+                }*/
             };
 
     	require(['$api/models#Playlist', '$api/models#Track', '$api/models#player'], function(Playlist, Track, Player) {
@@ -124,7 +162,18 @@ angular.module('partymote.services',[])
 	};
 	return {getPlaylist:getPlaylist,
             addTrack:addTrack,
+            addDroped:addDroped,
             getCurrentTrackInfo: getCurrentTrackInfo,
             addPlayerEventListener:addPlayerEventListener,
             addPlaylistEventListener:addPlaylistEventListener};
-});
+}).service('dropHandler',function(playlistServices){
+
+
+    require(['$api/models'], function(models){
+        var handleDrop = function(){
+            playlistServices.addDroped(models.application.dropped[0]);
+        };
+        models.application.addEventListener('dropped', handleDrop);
+    });
+
+}).run(function(dropHandler){}); 
