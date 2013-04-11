@@ -47,7 +47,7 @@ body {
 
 [data-icon]:before {
   font-family: 'entypo';
-  /*position: absolute;*/
+  /*position: absolute;  */
   content: attr(data-icon);
   left: 0;
   font-size: 2em;
