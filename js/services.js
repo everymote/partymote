@@ -1,13 +1,5 @@
 'use strict';
 
-/* Services */
-
-
-// Demonstrate how to register services
-// In this case it is a simple value service.
-//angular.module('partymote.services', []).
-//  value('version', '0.1');
-
 angular.module('localStorageService',[]).value('localStorage', window.localStorage);
 
 angular.module('settingsService',['localStorageService'])
@@ -104,7 +96,7 @@ angular.module('partymote.services',[])
 
         };
 
-        var addTrack = function(trackURI){
+        var addTrackFromURI = function(trackURI){
             _Track
                 .fromURI(trackURI)
                 .load('name','uri','image')
@@ -119,19 +111,42 @@ angular.module('partymote.services',[])
                 });
             };
 
-        var addDroped = function(droped){
-            //droped.constructor.name;
-                droped
+        var addHandler = {};
+        addHandler.Track = function(track){
+            track
                     .load('name','uri','image')
                     .done(function(loadedTrack){
                              loadedPlaylist.tracks.add(loadedTrack);
                              updatePlaylistView();
                          });
-                    
-                /*if(!_Player.playing){
-                    _Player.playContext(loadedPlaylist);
-                }*/
-            };
+        };
+        addHandler.Playlist = function(playlist){
+            playlist.
+                load('tracks').
+                done(function(dragedPlaylist){
+
+                   dragedPlaylist.tracks.snapshot().done(function(snap){
+                        
+                    snap.loadAll('name','uri','image').done(function(loadedTracks) {
+                          loadedPlaylist.tracks.add(loadedTracks);
+                             updatePlaylistView();
+                            });
+                    });
+                   
+                });
+        };
+        addHandler.Album = addHandler.Playlist;
+
+
+        var addDroped = function(droped){
+            var func = addHandler[droped.constructor.name];
+            if(func){
+                func(droped);
+            }else{
+                console.log(droped);
+            }
+
+        };
 
     	require(['$api/models#Playlist', '$api/models#Track', '$api/models#player'], function(Playlist, Track, Player) {
             _Track = Track;
@@ -149,9 +164,9 @@ angular.module('partymote.services',[])
     										loadedPlaylist.tracks.snapshot(0, 50)
                                                 .done(function(snapshot) {playlist.tracks = snapshot.toArray();});
                                             
-                                            addTrack('spotify:track:7BkQiT7LfhOCEuyWD9FF35');
-                                            addTrack('spotify:track:6yuswSxDJzx0Tulvy6ZBXg');
-                                            addTrack('spotify:track:10bcDungKvOzo2W3LsSdp9');
+                                            addTrackFromURI('spotify:track:7BkQiT7LfhOCEuyWD9FF35');
+                                            addTrackFromURI('spotify:track:6yuswSxDJzx0Tulvy6ZBXg');
+                                            addTrackFromURI('spotify:track:10bcDungKvOzo2W3LsSdp9');
                                             
     								});
     							});
@@ -161,7 +176,7 @@ angular.module('partymote.services',[])
 		return playlist;
 	};
 	return {getPlaylist:getPlaylist,
-            addTrack:addTrack,
+            addTrackFromURI:addTrackFromURI,
             addDroped:addDroped,
             getCurrentTrackInfo: getCurrentTrackInfo,
             addPlayerEventListener:addPlayerEventListener,
@@ -171,7 +186,7 @@ angular.module('partymote.services',[])
 
     require(['$api/models'], function(models){
         var handleDrop = function(){
-            playlistServices.addDroped(models.application.dropped[0]);
+            models.application.dropped.forEach(playlistServices.addDroped);
         };
         models.application.addEventListener('dropped', handleDrop);
     });

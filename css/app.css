@@ -44,10 +44,10 @@ body{
 
 [data-icon]:before {
   font-family: 'entypo';
-  /*position: absolute;  */
   content: attr(data-icon);
   left: 0;
-  font-size: 2em;
+  line-height: 0.71;
+  font-size: 4em;
   float: left;
   vertical-align: middle;
   padding: 0 10px;

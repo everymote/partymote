@@ -42,7 +42,7 @@ angular.module('everymote.service',['partymote.services','settingsService'])
 	        spThing.handleAction = function(action){
 	            if(action.id === "search"){
 	                console.log(action);
-	                playlistServices.addTrack(action.value);
+	                playlistServices.addTrackFromURI(action.value);
 	                
 	            }
 	        };
