@@ -101,6 +101,7 @@ angular.module('partymote.services',[])
                 .fromURI(trackURI)
                 .load('name','uri','image')
                 .done(function(loadedTrack){
+                    loadedTrack.test = 4;
                     loadedPlaylist.tracks.add(loadedTrack);
                     updatePlaylistView();
                     
@@ -139,12 +140,27 @@ angular.module('partymote.services',[])
 
 
         var addDroped = function(droped){
+            if(!droped){return;}
+
             var func = addHandler[droped.constructor.name];
             if(func){
                 func(droped);
             }else{
                 console.log(droped);
             }
+
+        };
+//http://open.spotify.com/track/1g2qPLmj7zk831LAI0ryKY"
+        var addDropedUrl = function(url){
+            if(!url){return;}
+            /*url.
+            var func = addHandler[droped.constructor.name];
+
+            if(func){
+                func(addDropedUrls);
+            }else{
+                console.log(droped);
+            }*/
 
         };
 
@@ -158,37 +174,43 @@ angular.module('partymote.services',[])
     		Playlist.
     			createTemporary("partymote").
     			done(function(p){
-    								p.load('tracks').
-    									done(function(playlistPromise){
-    										loadedPlaylist = playlistPromise;
-    										loadedPlaylist.tracks.snapshot(0, 50)
-                                                .done(function(snapshot) {playlist.tracks = snapshot.toArray();});
-                                            
-                                            addTrackFromURI('spotify:track:7BkQiT7LfhOCEuyWD9FF35');
-                                            addTrackFromURI('spotify:track:6yuswSxDJzx0Tulvy6ZBXg');
-                                            addTrackFromURI('spotify:track:10bcDungKvOzo2W3LsSdp9');
-                                            
-    								});
-    							});
+    					   p.load('tracks').
+    					   	done(function(playlistPromise){
+    					   		loadedPlaylist = playlistPromise;
+    					   		loadedPlaylist.tracks.snapshot(0, 50)
+                                        .done(function(snapshot) {playlist.tracks = snapshot.toArray();});
+                                    
+                                    addTrackFromURI('spotify:track:7BkQiT7LfhOCEuyWD9FF35');
+                                    addTrackFromURI('spotify:track:6yuswSxDJzx0Tulvy6ZBXg');
+                                    addTrackFromURI('spotify:track:10bcDungKvOzo2W3LsSdp9');
+                                    
+    					   });
+    					});
     	});
 
-	var getPlaylist = function() {
-		return playlist;
-	};
-	return {getPlaylist:getPlaylist,
-            addTrackFromURI:addTrackFromURI,
-            addDroped:addDroped,
-            getCurrentTrackInfo: getCurrentTrackInfo,
-            addPlayerEventListener:addPlayerEventListener,
-            addPlaylistEventListener:addPlaylistEventListener};
-}).service('dropHandler',function(playlistServices){
+    	var getPlaylist = function() {
+    		return playlist;
+    	};
+    	return {getPlaylist:getPlaylist,
+                addTrackFromURI:addTrackFromURI,
+                addDroped:addDroped,
+                addDropedUrl:addDropedUrl,
+                getCurrentTrackInfo: getCurrentTrackInfo,
+                addPlayerEventListener:addPlayerEventListener,
+                addPlaylistEventListener:addPlaylistEventListener};
 
+    }).service('dropHandler',function(playlistServices){
+        require(['$api/models'], function(models){
+            var handleDrop = function(){
+                models.application.dropped.forEach(playlistServices.addDroped);
+            };
+            models.application.addEventListener('dropped', handleDrop);
+        });
 
-    require(['$api/models'], function(models){
-        var handleDrop = function(){
-            models.application.dropped.forEach(playlistServices.addDroped);
+        var handleDropedUrls = function(urls){
+            urls.forEach(playlistServices.addDropedUrls);
         };
-        models.application.addEventListener('dropped', handleDrop);
-    });
 
-}).run(function(dropHandler){}); 
+        return {handleDropedUrls:handleDropedUrls};
+
+    }).run(function(dropHandler){}); 
