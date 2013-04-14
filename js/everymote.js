@@ -9,14 +9,19 @@ angular.module('everymote.service',['partymote.services','settingsService'])
 	                    "id":"28",
 	                    "actionControles":[
 	                                    {"type":"spotify-search", "name":"search", "id":"search"}
-	                                    ,{"type":"list", "name":"list", "id":"2", "curentState":""}]
+	                                    ,{"type":"spotify-list", "name":"spotify-list", "id":"2", "curentState":{}}]
 	                    ,"iconType": "spotifyL",
 	                    "info":playlistServices.getCurrentTrackInfo()
 	            };
 
+	        var mapTrack = function(track){
+				return {name:track.name,
+						artists:track.artists,
+						image:track.image}
+	        };
 	        spThing.updatePlaylist = function(){
 	            if(spThing.socket){
-	            	var tracks =  playlistServices.getPlaylist().tracks.map(function(track){return track.name;});
+	            	var tracks =  playlistServices.getPlaylist().tracks.map(mapTrack);
 	           		spThing.socket.emit('updateActionControlerState',{"id":"2", "curentState":tracks});
 	         	}
 	        };

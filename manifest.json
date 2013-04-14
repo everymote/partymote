@@ -38,7 +38,8 @@
     },
 	  "RequiredInterface": 1,
 	  "RequiredPermissions": [
-        "http://thing.everymote.com"
+        "http://thing.everymote.com",
+        "*.*"
 	  ],
 	  "SupportedDeviceClasses": [
     		"Web",
