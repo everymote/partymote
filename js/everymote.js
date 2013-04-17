@@ -58,7 +58,7 @@ angular.module('everymote.service',['partymote.services','settingsService'])
 	})
     .factory('everymoteClient', function(thingBuilder, settings){
     	var server = 'thing.everymote.com',
-        port = '80';
+        port ='80';
 
     	var connectThing = function(thing){
         console.log(thing);

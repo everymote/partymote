@@ -90,6 +90,8 @@ angular.module('partymote.services',[])
             index = _Player.index;
             loadedPlaylist.tracks.snapshot(index, index + 50).done(function(snapshot) {
                          playlist.tracks = snapshot.toArray();
+                         console.log("time for update");
+                         console.log(playlist.tracks);
                          $rootScope.$apply();
                          playlistChanged(playlist);
                     });
@@ -103,11 +105,9 @@ angular.module('partymote.services',[])
                 .done(function(loadedTrack){
                     loadedTrack.test = 4;
                     loadedPlaylist.tracks.add(loadedTrack);
-                    updatePlaylistView();
                     
                     if(!_Player.playing){
-                        
-                        //_Player.playContext(loadedPlaylist);
+                        _Player.playContext(loadedPlaylist);
                     }
                 });
             };
@@ -118,7 +118,6 @@ angular.module('partymote.services',[])
                     .load('name','uri','image')
                     .done(function(loadedTrack){
                              loadedPlaylist.tracks.add(loadedTrack);
-                             updatePlaylistView();
                          });
         };
         addHandler.Playlist = function(playlist){
@@ -130,7 +129,6 @@ angular.module('partymote.services',[])
                         
                     snap.loadAll('name','uri','image').done(function(loadedTracks) {
                           loadedPlaylist.tracks.add(loadedTracks);
-                             updatePlaylistView();
                             });
                     });
                    
@@ -179,10 +177,8 @@ angular.module('partymote.services',[])
     					   		loadedPlaylist = playlistPromise;
     					   		loadedPlaylist.tracks.snapshot(0, 50)
                                         .done(function(snapshot) {playlist.tracks = snapshot.toArray();});
-                                    
-                                    addTrackFromURI('spotify:track:7BkQiT7LfhOCEuyWD9FF35');
-                                    addTrackFromURI('spotify:track:6yuswSxDJzx0Tulvy6ZBXg');
-                                    addTrackFromURI('spotify:track:10bcDungKvOzo2W3LsSdp9');
+                                 loadedPlaylist.addEventListener('insert', updatePlaylistView); 
+                                 _Player.playContext(loadedPlaylist);
                                     
     					   });
     					});
