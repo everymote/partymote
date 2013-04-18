@@ -56,7 +56,7 @@ angular.module('locationService',[])
 
 angular.module('partymote.services',[])
     .service('playlistServices',function($rootScope){
-    	var playlist = {};
+    	var playlist = {tracks:[]};
     	var loadedPlaylist;
         var _Track, _Player;
         var index = 0;
@@ -97,13 +97,18 @@ angular.module('partymote.services',[])
         var setIndex = function(e){
             console.log(e);
         }
-
+      
         var updatePlaylistView = function(){
+            
+            //loadedPlaylist.tracks = loadedPlaylist.tracks.sort('name:d');
+            //console.log(t);
+           
+
             index = _Player.index;
-            loadedPlaylist.tracks.snapshot(index).done(function(snapshot) {
+            loadedPlaylist.tracks.snapshot().done(function(snapshot) {
                          playlist.tracks = snapshot.toArray();
                          console.log("time for update");
-                         console.log(playlist.tracks);
+                         //console.log(playlist.tracks);
                          $rootScope.$apply();
                          playlistChanged(playlist);
                          startPlay();
@@ -179,8 +184,9 @@ angular.module('partymote.services',[])
             _Player.addEventListener('change:index', setIndex);
             _Player.addEventListener('change:track', trackChanged);
 
+            var timeStamp = new Date().getTime();
     		Playlist.
-    			createTemporary("partymote").
+    			createTemporary("partymote:"+timeStamp).
     			done(function(p){
     					   p.load('tracks').
     					   	done(function(playlistPromise){
