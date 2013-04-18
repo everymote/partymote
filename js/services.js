@@ -86,14 +86,27 @@ angular.module('partymote.services',[])
             return "Nothing playing!"
         };
 
+        var startPlay = function(){
+            if(!_Player.context || _Player.context.uri !=  loadedPlaylist.uri){
+                _Player.playContext(loadedPlaylist);
+            }else{
+                index = _Player.index;
+            }
+        };
+
+        var setIndex = function(e){
+            console.log(e);
+        }
+
         var updatePlaylistView = function(){
             index = _Player.index;
-            loadedPlaylist.tracks.snapshot(index, index + 50).done(function(snapshot) {
+            loadedPlaylist.tracks.snapshot(index).done(function(snapshot) {
                          playlist.tracks = snapshot.toArray();
                          console.log("time for update");
                          console.log(playlist.tracks);
                          $rootScope.$apply();
                          playlistChanged(playlist);
+                         startPlay();
                     });
 
         };
@@ -105,10 +118,6 @@ angular.module('partymote.services',[])
                 .done(function(loadedTrack){
                     loadedTrack.test = 4;
                     loadedPlaylist.tracks.add(loadedTrack);
-                    
-                    if(!_Player.playing){
-                        _Player.playContext(loadedPlaylist);
-                    }
                 });
             };
 
@@ -127,7 +136,7 @@ angular.module('partymote.services',[])
 
                    dragedPlaylist.tracks.snapshot().done(function(snap){
                         
-                    snap.loadAll('name','uri','image').done(function(loadedTracks) {
+                        snap.loadAll('name','uri','image').done(function(loadedTracks) {
                           loadedPlaylist.tracks.add(loadedTracks);
                             });
                     });
@@ -167,6 +176,7 @@ angular.module('partymote.services',[])
             _Player = Player;
 
             _Player.addEventListener('change:index', updatePlaylistView);
+            _Player.addEventListener('change:index', setIndex);
             _Player.addEventListener('change:track', trackChanged);
 
     		Playlist.
@@ -175,11 +185,8 @@ angular.module('partymote.services',[])
     					   p.load('tracks').
     					   	done(function(playlistPromise){
     					   		loadedPlaylist = playlistPromise;
-    					   		loadedPlaylist.tracks.snapshot(0, 50)
-                                        .done(function(snapshot) {playlist.tracks = snapshot.toArray();});
-                                 loadedPlaylist.addEventListener('insert', updatePlaylistView); 
-                                 _Player.playContext(loadedPlaylist);
-                                    
+                                loadedPlaylist.addEventListener('insert', updatePlaylistView);
+                                updatePlaylistView();
     					   });
     					});
     	});
