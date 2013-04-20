@@ -96,6 +96,12 @@ body{
   padding: 15px;
 }
 
+.now-playing-text{
+  padding-top: 1em;
+  padding-left: 1em;
+  color: #E41178;
+}
+
 .play-list{
   list-style:none;
   padding:0px;  
@@ -105,7 +111,6 @@ body{
 .play-list li:first-child{
   background-color: #67c6e2;
   height: 9em;
-  margin-bottom: 3em;
 } 
 
 .play-list li:first-child img{
@@ -133,9 +138,6 @@ body{
     font-weight: lighter;
     color: #787878;
 }
-.play-list li:first-child:after{
-  content: 'Playlist';
-} 
 
 .play-list li:not(:first-child){
   background-color: white;
