@@ -45,7 +45,7 @@ angular.module('locationService',[])
                          	require(['$api/location#Location'], function(location){
 									location.query().load(['latitude', 'longitude']).done(function(loc) {
 									  callbackfunc(loc);
-									});
+									}).fail(function(a, b) { console.log(a); console.log(b);});;
                          	
                  			});
                          }
@@ -100,9 +100,9 @@ angular.module('partymote.services',[])
       
         var updatePlaylistView = function(){
             
-            //loadedPlaylist.tracks = loadedPlaylist.tracks.sort('name:d');
-            //console.log(t);
-           
+            var t = loadedPlaylist.tracks.sort('name:d');
+            console.log(t);
+            console.log(loadedPlaylist);
 
             index = _Player.index;
             loadedPlaylist.tracks.snapshot().done(function(snapshot) {

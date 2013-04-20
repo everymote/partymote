@@ -25,6 +25,8 @@ body{
   box-sizing: border-box; 
 }
 
+
+
 #settings{
   background-color: #67c6e2;
   color: white;
@@ -37,9 +39,38 @@ body{
 }
 
 #howto{
-  background-color: gray;
+  background-color: #E41178;
   color: white;
+  height: 66px;
   -webkit-font-smoothing: antialiased;
+}
+
+.logo{
+  width: 140px;
+  height: 66px;
+  float: left;
+}
+
+.logo-text{
+  fill: #ecebe8;
+}
+
+.info{
+  padding-left: 3em;
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+}
+
+.info-text{
+  font-size: 1.3em;
+  line-height: 1em;
+}
+
+.add-url{
+  font-size: 2em;
+  line-height: 1em;
 }
 
 [data-icon]:before {

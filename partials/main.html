@@ -1,7 +1,36 @@
-<div data-icon='⊕' id="howto" drop-area>
-	<div>
-		<div>to add track visit:</div>
-		<div>partymote.com</div>
+<div  id="howto" drop-area>
+	
+			<svg class="logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+		 		width="283.465px" height="141.732px" viewBox="0 0 283.465 141.732" enable-background="new 0 0 283.465 141.732"
+		 		xml:space="preserve">
+			<g>
+				<g>
+					<path class="logo-text" d="M244.232,76.949h2.555c0.977,0,1.717,0.221,2.221,0.664s0.756,1.094,0.756,1.949c0,0.863-0.25,1.516-0.752,1.957
+						s-1.244,0.662-2.225,0.662h-1.371v3.516h-1.184V76.949z M245.416,77.922v3.287h1.371c0.547,0,0.975-0.145,1.281-0.434
+						s0.459-0.693,0.459-1.213s-0.152-0.924-0.457-1.211s-0.732-0.43-1.283-0.43H245.416z"/>
+					<path class="logo-text" d="M250.514,76.979h1.582l1.512,4.441l1.523-4.441h1.588v8.719h-1.096v-7.705l-1.559,4.594h-0.896l-1.564-4.594v7.705h-1.09
+						V76.979z"/>
+				</g>
+				<polygon class="logo-text" points="63.307,64.068 88.385,20.664 117.646,64.068 	"/>
+				<polygon class="logo-text" points="51.924,77.664 41.854,95.092 30.105,77.664 5.026,121.068 26.846,121.068 59.366,121.068 
+					81.185,121.068 	"/>
+				<polygon class="logo-text" points="36.973,48.367 57.016,48.367 57.016,21.281 14.846,21.281 14.846,63.452 36.973,63.452 	"/>
+				<polygon class="logo-text" points="156.13,39.574 165.375,30.328 165.375,21.281 123.205,21.281 123.205,63.452 131.914,63.452 137.838,57.527 
+					143.763,63.452 165.375,63.452 165.375,48.818 	"/>
+				<polygon class="logo-text" points="249.202,48.367 249.202,63.451 261.742,63.451 261.742,48.367 278.438,48.367 278.438,21.281 273.494,21.281 
+					260.146,34.631 246.798,21.281 236.268,21.281 236.268,48.367 	"/>
+				<polygon class="logo-text" points="193.145,48.367 193.145,63.452 203.776,63.452 203.776,48.367 217.438,48.367 217.438,21.281 175.268,21.281 
+					175.268,48.367 	"/>
+				<polygon class="logo-text" points="152.141,104.75 152.141,119.835 167.187,119.835 167.187,104.75 183.59,104.75 183.59,77.664 141.42,77.664 
+					141.42,104.75 	"/>
+				<rect class="logo-text" x="85.393" y="78.281" width="42.17" height="42.171"/>
+				<polygon class="logo-text" points="229.645,113.972 229.645,104.75 238.522,104.75 238.522,94.589 216.71,94.589 216.71,85.367 238.522,85.367 
+					238.522,77.664 196.353,77.664 196.353,119.835 238.522,119.835 238.522,113.972 	"/>
+			</g>
+		</svg>
+	<div class="info">
+		<div class="info-text">to add track visit:</div>
+		<div class="add-url" >partymote.com</div>
 	</div>
 </div>
 <div>
@@ -11,7 +40,7 @@
 	<li data-position="{{$index|zero}}" ng-repeat="track in playlist.tracks">
 		<img ng-src="{{track.image}}"/>
 		<div class="track-artist-container">
-			<div class="track">{{track.name}}</div>
+			<div class="track">{{track.name}} - {{track.test}}</div>
 			<div class="artist" >
 				<span ng-repeat="artist in track.artists">{{artist.name}}</span> 
 			</div>
