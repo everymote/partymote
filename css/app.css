@@ -96,6 +96,20 @@ body{
   padding: 15px;
 }
 
+.get-it-started{
+  color: #787878;
+  border: 4px dashed #787878;
+  height: 150px;
+  margin-top: 40px;
+  font-size: 2em;
+  text-align: center;
+   display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  -webkit-border-radius: 15px;
+}
+
 .now-playing-text{
   padding-top: 1em;
   padding-left: 1em;

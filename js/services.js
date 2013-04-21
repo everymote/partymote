@@ -165,6 +165,12 @@ angular.module('partymote.services',[])
 //http://open.spotify.com/track/1g2qPLmj7zk831LAI0ryKY"
         var addDropedUrl = function(url){
             if(!url){return;}
+
+            console.log(url);
+            require(['$api/models#Playlist'], function(Playlist){
+               var dragdPlaylist = Playlist.fromURI(url);
+               addHandler.Playlist(dragdPlaylist);
+            });
             /*url.
             var func = addHandler[droped.constructor.name];
 
@@ -217,7 +223,7 @@ angular.module('partymote.services',[])
         });
 
         var handleDropedUrls = function(urls){
-            urls.forEach(playlistServices.addDropedUrls);
+            urls.forEach(playlistServices.addDropedUrl);
         };
 
         return {handleDropedUrls:handleDropedUrls};
