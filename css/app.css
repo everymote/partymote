@@ -125,6 +125,7 @@ body{
 .play-list li:first-child{
   background-color: #67c6e2;
   height: 9em;
+  margin-bottom: 3px;
 } 
 
 .play-list li:first-child img{
