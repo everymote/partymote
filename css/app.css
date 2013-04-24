@@ -125,13 +125,11 @@ body{
 .play-list li:first-child{
   background-color: #67c6e2;
   height: 9em;
-  margin-bottom: 3px;
 } 
 
 .play-list li:first-child img{
   float: left;
   width: 9em;
-  padding: 1em;
 } 
 
 .play-list li:first-child .track{
@@ -142,6 +140,15 @@ body{
     font-size: 1.5em;
     font-weight: lighter;
     color: #0f7087;
+}
+
+.queue-number {
+  color: #67c6e2;
+  font-size: 27px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  padding: 5px;
+  float: left;
 }
 
 .play-list li:not(:first-child) .track{
@@ -155,30 +162,21 @@ body{
 }
 
 .play-list li:not(:first-child){
-  background-color: white;
   height: 50px;
   position: relative;
-  padding-left: 45px;
-  margin-bottom: 3px;
   color: #8a8a8a;
+  border-top: 1px solid #67c6e2;
+  border-bottom: 1px solid #67c6e2;
 } 
 
 .play-list li:not(:first-child) img{
   float: left;
+  height: 100%;
   width: 50px;
-  padding: 3px;
+  
 } 
 
-.play-list li:not(:first-child):before {
-  color: #67c6e2;
-  content: attr(data-position);
-  position: absolute;
-  left: 0;
-  font-size: 27px;
-  -webkit-font-smoothing: antialiased;
-  font-weight: bold;
-  padding: 5px
-}
+
   
 
 .track-artist-container{
@@ -187,6 +185,7 @@ body{
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-box-pack: center;
+  padding-left: 1em;
 }
 
 .artist span:not(:last-child):after{

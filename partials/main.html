@@ -38,12 +38,13 @@
 	To get the party started drag and drop a playlist here.
 	
 </div>
-<div class="now-playing-text" ng-show="playlist.tracks">
+<div class="now-playing-text" style="visibility: hidden;" ng-show="playlist.tracks">
 	Now Playing
 </div>
 <ul class="play-list" >
-	<li data-position="{{$index|zero}}" ng-repeat="track in playlist.tracks">
+	<li  ng-repeat="track in playlist.tracks">
 		<img ng-src="{{track.image}}"/>
+		<div class="queue-number"   ng-hide="$first">{{$index|zero}}</div>
 		<div class="track-artist-container">
 			<div class="track">{{track.name}} - {{track.test}}</div>
 			<div class="artist" >
