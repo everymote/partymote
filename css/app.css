@@ -30,7 +30,6 @@ body{
 #settings{
   background-color: #67c6e2;
   color: white;
-  -webkit-font-smoothing: antialiased;
 }
 
 #container{
@@ -42,7 +41,6 @@ body{
   background-color: #E41178;
   color: white;
   height: 66px;
-  -webkit-font-smoothing: antialiased;
 }
 
 .logo{
