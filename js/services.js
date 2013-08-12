@@ -232,11 +232,9 @@ angular.module('partymote.services',[])
         };
 
       var test = function(models){
-        models.session.load('user').done(function(blob){
+        models.session.load('country').done(function(blob){
           console.log(blob);
-          blob.user.load('name').done(function(user){
-            console.log(user);
-          })
+          
         });
       }
         
@@ -302,3 +300,6 @@ angular.module('partymote.services',[])
         return {handleDropedUrls:handleDropedUrls};
 
     }).run(function(dropHandler){}); 
+
+    //https://gist.github.com/plamere/5207460
+    //http://developer.echonest.com/docs/v4/playlist.html#static
