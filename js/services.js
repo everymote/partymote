@@ -65,7 +65,7 @@ angular.module('partymote.services',[])
         var index = 0;
         var playerEventListeners = [];
         var playlistEventListeners = [];
-
+        var addHandler = {};
         var addPlayerEventListener = function(callback){
             playerEventListeners.push(callback);
         };
@@ -138,7 +138,8 @@ angular.module('partymote.services',[])
                  
                  var tracks = _Track.fromURIs(spotifyURIs);
                  console.log(tracks);
-                 _loadedPlaylist.tracks.add(tracks);
+                 tracks.forEach(addHandler.Track);
+                 
                 //callback(data);
                 }).
                 error(function(data, status) {
@@ -206,7 +207,7 @@ angular.module('partymote.services',[])
                 .fromURI(trackURI)
                 .load('name','uri','image')
                 .done(function(loadedTrack){
-                    loadedTrack.test = 4;
+                    loadedTrack.test = 'user';
                     //_loadedPlaylist.tracks.add(loadedTrack);
                     addUserTrack(loadedTrack);
                 });
@@ -214,7 +215,7 @@ angular.module('partymote.services',[])
 
         
 
-        var addHandler = {};
+        
         addHandler.Track = function(track){
             track
                     .load('name','uri','image')
