@@ -57,7 +57,7 @@ angular.module('locationService',[])
 });
 
 angular.module('partymote.services',[])
-    .service('playlistServices',function($rootScope){
+    .service('playlistServices',function($rootScope, $http){
     	var playlist = {tracks:[]};
         var _loadedPlaylist;
     	  var loadedPlayer;
@@ -112,10 +112,55 @@ angular.module('partymote.services',[])
             }
         };
 
+
+        var getTracksFromEchonest = function(song){
+          return song.tracks[0].foreign_id.replace('-WW', '');
+        };
+
+        var getSimilarSongs = function(songs){
+
+          var params = {api_key:'OF9T6VDU7WNAERECF',
+                        song_id:songs,
+                        bucket:['id:spotify-WW', 'tracks'],
+                        limit:'true',
+                        results:10,
+                        type:'artist-radio',
+                        variety:0.2,
+                        distribution:'focused'
+                      };
+          var options = {params:params};
+
+          
+          $http.get('http://developer.echonest.com/api/v4/playlist/static', options).
+                success(function(data, status) {
+                  
+                 var spotifyURIs = data.response.songs.map(getTracksFromEchonest);
+                 
+                 var tracks = _Track.fromURIs(spotifyURIs);
+                 console.log(tracks);
+                 _loadedPlaylist.tracks.add(tracks);
+                //callback(data);
+                }).
+                error(function(data, status) {
+                  console.log(data);
+                });
+        };
+
+        var addMoreSongs = function(){
+            var total = _lastSnapshot.length;
+            var lastFive = total - 5;
+            _loadedPlaylist.tracks.snapshot(lastFive, total).done(function(snapshot) {
+              console.log(snapshot);
+              var songs = snapshot.toURIs().map(function(songUri){return songUri.replace('spotify','spotify-WW')});
+              console.log(songs);
+              getSimilarSongs(songs);
+            });
+
+        };
        
       
         var updatePlaylistView = function(){
-            setTimeout(startPlay,500);
+            setTimeout(startPlay, 500);
             //var t = _loadedPlaylist.tracks.sort('name:d');
             //console.log(t);
             console.log(_loadedPlaylist);
@@ -130,19 +175,26 @@ angular.module('partymote.services',[])
                          $rootScope.$apply();
                          playlistChanged(playlist);
                          
+                         if(index > 0 && playlist.tracks.length == 1){
+                            addMoreSongs();
+                         };
+
                     });
 
         };
 
         var lastAddedIndex = 0;
         var addUserTrack = function(loadedTrack){
-          if(_lastSnapshot){
-            lastAddedIndex = lastAddedIndex > index ? lastAddedIndex : index;
-            lastAddedIndex = lastAddedIndex + 1;
+          lastAddedIndex = lastAddedIndex > index ? lastAddedIndex : index;
+          lastAddedIndex = lastAddedIndex + 1;
+          if(_lastSnapshot && _lastSnapshot.length > lastAddedIndex){
+            
             var ref = _lastSnapshot.ref(lastAddedIndex);
-            console.log(lastAddedIndex);
-            console.log(ref);
-            _loadedPlaylist.tracks.insert(ref, loadedTrack);
+              console.log(_lastSnapshot.length);
+              console.log(lastAddedIndex);
+              console.log(ref);
+              _loadedPlaylist.tracks.insert(ref, loadedTrack);
+            
           }else{
             _loadedPlaylist.tracks.add(loadedTrack);
           }
