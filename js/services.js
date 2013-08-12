@@ -29,10 +29,7 @@ angular.module('settingsService',['localStorageService'])
 angular.module('locationService',[])
     .factory('location',function(){
 	var geo = (function() {
-		
-
-
-         	var callbackfunc;
+          var callbackfunc;
          	var postPosition = function (position) {
                  	callbackfunc(position);
          	};
@@ -40,17 +37,17 @@ angular.module('locationService',[])
                 	 console.log("Error getting position");
                      console.log(a); console.log(b);
          	};
+          var getLocation = function(location){
+            var loc = location.Location.query();
+            loc.load(['latitude', 'longitude']).done(postPosition).fail(onError);
+          };
+
+
          	return {
                  	start : function(callback){
                          	callbackfunc = callback;
-                         	require(['$api/location'], function(location){
-									var loc = location.Location.query();
-                      loc.load(['latitude', 'longitude']).done(function(loc) {
-									  callbackfunc(loc);
-									}).fail(onError);;
-                         	
-                 			});
-                         }
+                          require(['$api/location'], getLocation);
+                      }
          	};
 	}());
 	return geo;
