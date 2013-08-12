@@ -124,7 +124,7 @@ angular.module('partymote.services',[])
                         bucket:['id:spotify-WW', 'tracks'],
                         limit:'true',
                         results:10,
-                        type:'artist-radio',
+                        type:'song-radio',
                         variety:0.2,
                         distribution:'focused'
                       };
