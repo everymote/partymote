@@ -281,15 +281,16 @@ angular.module('partymote.services',[])
                            });
         };
 
-      var test = function(models){
-        models.session.load('country').done(function(blob){
-          console.log(blob);
-          
+      var country = "WW";
+      var setCountry = function(models){
+        models.session.load('country').done(function(session){
+          console.log(session);
+          country = session.country;
         });
       }
         
     	require(['$api/models'], function(models) {
-            test(models);
+            setCountry(models);
             index = 0;
             _models = models;
             _Track = models.Track;

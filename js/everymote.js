@@ -94,6 +94,8 @@ angular.module('everymote.service',['partymote.services','settingsService'])
     	};
 
     	var thing = thingBuilder({});
+
+    	
     	connectThing(thing);
 
 
