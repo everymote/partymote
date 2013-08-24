@@ -36,18 +36,10 @@ angular.module('everymote.service',['partymote.services','settingsService'])
 	        };
 	        playlistServices.addPlayerEventListener(spThing.updateTrack);
 
-	     
-/*
-	        spThing.updatePlayStatus = function(){
-	            if(spThing.socket){
-	               updateEverymoteWithPlayStatus(spThing);
-	            }
-	        };
-*/	        
 	        spThing.handleAction = function(action){
 	            if(action.id === "search"){
 	                console.log(action);
-	                playlistServices.addTrackFromURI(action.value);
+	                playlistServices.addUserTrackFromURI(action.value.href, action.value.userId);
 	                
 	            }
 	        };
@@ -75,11 +67,6 @@ angular.module('everymote.service',['partymote.services','settingsService'])
 	                thing.socket = socket;
 	                thing.updateTrack();
 	                thing.updatePlaylist();
-	                //updateEverymoteWithTrackDetails(spThing);
-
-	               // getPlayList(function(tracks){console.log("first GetPlayLis"); console.dir(tracks);spThing.socket.emit('updateActionControlerState', {"id":"2", "curentState":tracks});});
-
-	              //updateEverymoteWithPlayList(spThing);
 	        }).on('doAction', function (action) {
 	                console.log(action.id);
 	                thing.handleAction(action);

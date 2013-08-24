@@ -169,7 +169,6 @@ angular.module('partymote.services',[])
                          _lastSnapshot = snapshot;
                          playlist.tracks = snapshot.toArray();
                          console.log("time for update");
-                         //console.log(playlist.tracks);
                          $rootScope.$apply();
                          playlistChanged(playlist);
                          
@@ -181,15 +180,55 @@ angular.module('partymote.services',[])
 
         };
 
-        var lastAddedIndex = 0;
-        var addUserTrack = function(loadedTrack){
-          lastAddedIndex = lastAddedIndex > index ? lastAddedIndex : index;
-          lastAddedIndex = lastAddedIndex + 1;
-          if(_lastSnapshot && _lastSnapshot.length > lastAddedIndex){
+        var getUserAdded = function(snapshot, userId){
+          
+          if(snapshot){
+            var userAdded = {};
+            userAdded[userId] = 1;
+
+            var tracks = snapshot.toArray();
+            for(var i = 0; i < tracks.length; i++){
+              var addedByUser = tracks[i].userId;
+              if(i === 0 && !addedByUser && tracks.length > 1 && tracks[1].userId){
+                i = 1;
+                addedByUser = tracks[i].userId;
+              }
+              if(addedByUser){
+                console.log(userAdded);
+                console.log(userAdded[addedByUser]  + " hack " + userAdded[userId])
+                if(userAdded[addedByUser]){
+                  userAdded[addedByUser] = userAdded[addedByUser] + 1;
+                }else{
+                  userAdded[addedByUser] = 1;
+                }
+
+                var usersCurent = userAdded[userId] ? userAdded[userId] : 1;
+                if(userAdded[addedByUser] > (usersCurent)){
+                  return _lastSnapshot.ref(i + index);
+                }
+
+              }else{
+                if(i === 0 ){
+                  return _lastSnapshot.ref(i + index + 1);
+                }else{
+                  return _lastSnapshot.ref(i + index);
+                }
+              }
+            }
+          }
+        };
+
+        var addUserTrack = function(loadedTrack, userId){
+          
+          console.log(_lastSnapshot);
+          if(_lastSnapshot){
             
-            var ref = _lastSnapshot.ref(lastAddedIndex);
+            var ref = getUserAdded(_lastSnapshot, userId);
+            if(!ref){
+                _loadedPlaylist.tracks.add(loadedTrack);
+                return;
+              }
               console.log(_lastSnapshot.length);
-              console.log(lastAddedIndex);
               console.log(ref);
               _loadedPlaylist.tracks.insert(ref, loadedTrack);
             
@@ -199,20 +238,28 @@ angular.module('partymote.services',[])
 
         };
 
-        var addTrackFromURI = function(trackURI){
+        var users = {nr:0};
+        var getUserName = function(userId){
+            if(users[userId]){
+              return users[userId].name;
+            }else{
+              users.nr = users.nr + 1;
+              users[userId] = { name:"User " + users.nr};
+              return users[userId].name;  
+            }
+        };
+
+        var addUserTrackFromURI = function(trackURI, userId){
             _Track
                 .fromURI(trackURI)
                 .load('name','uri','image')
                 .done(function(loadedTrack){
-                    loadedTrack.test = 'user';
-                    //_loadedPlaylist.tracks.add(loadedTrack);
-                    addUserTrack(loadedTrack);
+                  loadedTrack.userId = userId;
+                  loadedTrack.test = getUserName(userId);
+                  addUserTrack(loadedTrack, userId);
                 });
             };
 
-        
-
-        
         addHandler.Track = function(track){
             track
                     .load('name','uri','image')
@@ -249,7 +296,6 @@ angular.module('partymote.services',[])
             }
 
         };
-//http://open.spotify.com/track/1g2qPLmj7zk831LAI0ryKY"
         var addDropedUrl = function(url){
             if(!url){return;}
 
@@ -258,14 +304,6 @@ angular.module('partymote.services',[])
                var dragdPlaylist = Playlist.fromURI(url);
                addHandler.Playlist(dragdPlaylist);
             });
-            /*url.
-            var func = addHandler[droped.constructor.name];
-
-            if(func){
-                func(addDropedUrls);
-            }else{
-                console.log(droped);
-            }*/
 
         };
 
@@ -273,11 +311,6 @@ angular.module('partymote.services',[])
             playlist.load('tracks').
                             done(function(playlistPromise){
                                _loadedPlaylist = playlistPromise;
-                              // _loadedPlaylist.tracks.clear().done();
-                               // loadedPlayer.playContext(_loadedPlaylist, 0);
-                               // var track = Track.fromURI("spotify:track:3fllpI9uZKkdy3NJS0J1oV");
-                               // _loadedPlaylist.tracks.add(track);
-                               // _loadedPlaylist.tracks.remove(track).done();
                            });
         };
 
@@ -287,9 +320,13 @@ angular.module('partymote.services',[])
           console.log(session);
           country = session.country;
         });
-      }
-        
-    	require(['$api/models'], function(models) {
+      };
+      
+      var test = function(a){
+        console.log(a);
+      };
+
+    	require(['$api/models','$api/audio'], function(models) {
             setCountry(models);
             index = 0;
             _models = models;
@@ -304,24 +341,10 @@ angular.module('partymote.services',[])
 
             var timeStamp = new Date().getTime();
     		models.Playlist.
-          //fromURI("spotify:user:macke8080:playlist:3I9xZFEm8CvBJcL55JfXeM").load('name').
     			createTemporary("partymote:"+timeStamp).
     			done(function(p){
-                                p.addEventListener('insert', updatePlaylistView);
-                                //loadedPlaylist = p.load('tracks');
-                                 //models.Playlist.fromURI(p.uri).load('name').done(function(playlist){
-                                    
-                                    loadPlaylist(p);
-                              //  });
-
-    					  /* p.load('tracks').
-    					   	done(function(playlistPromise){
-    					   		_loadedPlaylist = playlistPromise;
-                               // loadedPlayer.playContext(_loadedPlaylist, 0);
-                               // var track = Track.fromURI("spotify:track:3fllpI9uZKkdy3NJS0J1oV");
-                               // _loadedPlaylist.tracks.add(track);
-                               // _loadedPlaylist.tracks.remove(track).done();
-    					   });*/
+                              p.addEventListener('insert', updatePlaylistView);
+                              loadPlaylist(p);
     					});
     	});
 
@@ -329,7 +352,7 @@ angular.module('partymote.services',[])
     		return playlist;
     	};
     	return {getPlaylist:getPlaylist,
-                addTrackFromURI:addTrackFromURI,
+                addUserTrackFromURI:addUserTrackFromURI,
                 addDroped:addDroped,
                 addDropedUrl:addDropedUrl,
                 getCurrentTrackInfo: getCurrentTrackInfo,
