@@ -17,7 +17,7 @@
 	  "AppURL":"www.partymote.com",
 	  "BundleIdentifier": "partymote",
 	  "BundleType": "Application",
-	  "BundleVersion": "0.5",
+	  "BundleVersion": "0.6",
 	  "DefaultTabs": [
 		    {
 			      "arguments": "main",

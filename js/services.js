@@ -194,8 +194,6 @@ angular.module('partymote.services',[])
                 addedByUser = tracks[i].userId;
               }
               if(addedByUser){
-                console.log(userAdded);
-                console.log(userAdded[addedByUser]  + " hack " + userAdded[userId])
                 if(userAdded[addedByUser]){
                   userAdded[addedByUser] = userAdded[addedByUser] + 1;
                 }else{
@@ -219,8 +217,6 @@ angular.module('partymote.services',[])
         };
 
         var addUserTrack = function(loadedTrack, userId){
-          
-          console.log(_lastSnapshot);
           if(_lastSnapshot){
             
             var ref = getUserAdded(_lastSnapshot, userId);
@@ -228,8 +224,6 @@ angular.module('partymote.services',[])
                 _loadedPlaylist.tracks.add(loadedTrack);
                 return;
               }
-              console.log(_lastSnapshot.length);
-              console.log(ref);
               _loadedPlaylist.tracks.insert(ref, loadedTrack);
             
           }else{
@@ -255,7 +249,7 @@ angular.module('partymote.services',[])
                 .load('name','uri','image')
                 .done(function(loadedTrack){
                   loadedTrack.userId = userId;
-                  loadedTrack.test = getUserName(userId);
+                  loadedTrack.userName = getUserName(userId);
                   addUserTrack(loadedTrack, userId);
                 });
             };
