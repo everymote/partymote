@@ -218,6 +218,7 @@ angular.module('partymote.services',[])
 
         var addUserTrack = function(loadedTrack, userId){
           if(_lastSnapshot){
+            if(_lastSnapshot.find(loadedTrack)){return};
             
             var ref = getUserAdded(_lastSnapshot, userId);
             if(!ref){
