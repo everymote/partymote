@@ -6,10 +6,10 @@
 		    "en": "Creating a joint playlist as fair and effortlessly as possible."
 	  },
 	  "AppIcon": {
-		    "18x18": "",
-		    "64x64": "",
-		    "128x128": "",
-		    "300x300": ""
+		    "36x18": "/img/36_18.png",
+		    "64x64": "/img/64.png",
+		    "128x128": "/img/128.png",
+		    "300x300": "/img/300.png"
 	  },
 	  "AppName": {
 		    "en": "Partymote"

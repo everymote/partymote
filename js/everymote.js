@@ -11,6 +11,7 @@ angular.module('everymote.service',['partymote.services','settingsService'])
 	                                    {"type":"spotify-search", "name":"search", "id":"search"}
 	                                    ,{"type":"spotify-list", "name":"spotify-list", "id":"2", "curentState":{}}]
 	                    ,"iconType": "spotifyL",
+	                     //"position":{"lat":55.61245,"lon":12.99139},
 	                    "info":playlistServices.getCurrentTrackInfo()
 	            };
 
