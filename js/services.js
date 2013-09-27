@@ -120,7 +120,7 @@ angular.module('partymote.services',[])
                         song_id:songs,
                         bucket:['id:spotify-WW', 'tracks'],
                         limit:'true',
-                        results:10,
+                        results:5,
                         type:'song-radio',
                         variety:0.2,
                         distribution:'focused'
@@ -134,7 +134,7 @@ angular.module('partymote.services',[])
                  var spotifyURIs = data.response.songs.map(getTracksFromEchonest);
                  
                  var tracks = _Track.fromURIs(spotifyURIs);
-                 console.log(tracks);
+                 //console.log(tracks);
                  tracks.forEach(addHandler.Track);
                  
                 //callback(data);

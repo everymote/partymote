@@ -13,4 +13,6 @@ angular.module('partymote', ['partymote.filters',
     $routeProvider.when('/main', {templateUrl: 'partials/main.html', controller: MainCtrl});
     $routeProvider.when('/settings', {templateUrl: 'partials/settings.html', controller: SettingsCtrl});
     $routeProvider.otherwise({redirectTo: '/main'});
-  }]);
+  }]).config(function($httpProvider){
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+});
