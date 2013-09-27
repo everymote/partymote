@@ -135,7 +135,10 @@ angular.module('partymote.services',[])
                  
                  var tracks = _Track.fromURIs(spotifyURIs);
                  //console.log(tracks);
-                 tracks.forEach(addHandler.Track);
+                 tracks.forEach(function(track){
+                                            track.userName = "radio";
+                                            addHandler.Track(track);
+                                          });
                  
                 //callback(data);
                 }).
