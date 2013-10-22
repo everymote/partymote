@@ -39,7 +39,7 @@
 	  "RequiredInterface": 1,
 	  "RequiredPermissions": [
         "http://thing.everymote.com",
-        "http://developer.echonest.com"
+        "http://developer.echonest.com",
         "*.*"
 	  ],
 	  "SupportedDeviceClasses": [
