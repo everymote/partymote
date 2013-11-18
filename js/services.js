@@ -122,10 +122,12 @@ angular.module('partymote.services',[])
                         limit:'true',
                         results:5,
                         type:'song-radio',
-                        variety:0.2,
-                        distribution:'focused'
+                        variety:0.5,
+                        distribution:'focused',
+                        t:new Date().getTime()
                       };
-          var options = {params:params};
+          var options = {params:params,
+                        cache:false};
 
           
           $http.get('http://developer.echonest.com/api/v4/playlist/static', options).
