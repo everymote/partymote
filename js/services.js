@@ -123,8 +123,8 @@ angular.module('partymote.services',[])
                         results:5,
                         type:'song-radio',
                         variety:0.5,
-                        distribution:'focused',
-                        t:new Date().getTime()
+                        distribution:'focused'
+
                       };
           var options = {params:params,
                         cache:false};
