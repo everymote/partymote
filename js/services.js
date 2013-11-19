@@ -123,7 +123,7 @@ angular.module('partymote.services',[])
                         results:5,
                         type:'song-radio',
                         variety:0.5,
-                        distribution:'focused'
+                        distribution:'wandering'
 
                       };
           var options = {params:params,
